@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { 
   Container,
   Header,
@@ -7,8 +7,9 @@ import {
   Photo,
   User,
   UserGreeting,
-  UserName
- } from './styles'
+  UserName,
+  Icon
+ } from './styles';
 
 export function Dashboard(){
   return(
@@ -24,6 +25,7 @@ export function Dashboard(){
               <UserName>Ericlys</UserName>
             </User>
           </UserInfo>
+          <Icon name="power"/>
         </UserWrapper>
       </Header>
     </Container>
