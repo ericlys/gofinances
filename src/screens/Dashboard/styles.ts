@@ -1,7 +1,10 @@
 import styled from "styled-components/native"
+import { FlatList, FlatListProps } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize'
 import Constants  from 'expo-constants';
+
+import { DataListProps } from '.';
 
 export const Container = styled.View`
   flex: 1;
@@ -91,4 +94,10 @@ export const Title = styled.Text`
   margin-bottom: 16px;
 `
 
-export const TransactionList = styled.FlatList``;
+export const TransactionList = styled(
+    FlatList as new (props: FlatListProps<DataListProps>) => 
+      FlatList<DataListProps>
+  ).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: { paddingBottom: 10 }
+})``;
