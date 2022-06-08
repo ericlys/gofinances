@@ -33,3 +33,7 @@ export const Form = styled.View`
 `;
 
 export const Filds = styled.View``;
+export const TransactionTypys = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
