@@ -10,8 +10,9 @@ import {
   Title,
   Form,
   Filds,
-  TransactionTypys
+  TransactionTypes
 } from "./styles";
+import { CategorySelect } from "../../components/Form/CategorySelect";
 
 export function Register(){
   const [transactionType, setTransactionType] = useState('');
@@ -35,7 +36,7 @@ export function Register(){
             placeholder="Preço" 
           />
 
-          <TransactionTypys>
+          <TransactionTypes>
             <TransactionTypyButton 
               type="up" 
               title="Income"
@@ -48,7 +49,9 @@ export function Register(){
               onPress={() => handleTransactionTypySelect('down')}
               isActive={transactionType==='down'}
             />
-          </TransactionTypys>
+          </TransactionTypes>
+
+          <CategorySelect title="Categoria"/>
 
         </Filds>
 
