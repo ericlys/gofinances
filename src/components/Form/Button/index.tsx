@@ -18,7 +18,7 @@ export function Button({
   ...rest
 }: Props){
   return(
-    <Container onTouchStart={onPress}>
+    <Container onTouchEnd={onPress}>
       <Content {...rest}>
         <Title>
           { title }
