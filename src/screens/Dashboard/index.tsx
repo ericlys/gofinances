@@ -46,7 +46,7 @@ export function Dashboard(){
 
   const theme = useTheme();
 
-  function gestLastTransactionDate(
+  function getLastTransactionDate(
     collection: DataListProps[], 
     type: 'positive' | 'negative'
   ){
@@ -96,8 +96,8 @@ export function Dashboard(){
 
     setTransactions(transactionsFormatted);
 
-    const lastTransactionsEntries = gestLastTransactionDate(transactions, 'positive');
-    const lastTransactionsExpensives = gestLastTransactionDate(transactions, 'negative');
+    const lastTransactionsEntries = getLastTransactionDate(transactions, 'positive');
+    const lastTransactionsExpensives = getLastTransactionDate(transactions, 'negative');
 
     const totalInterval =
     Intl.DateTimeFormat('pt-BR', {
