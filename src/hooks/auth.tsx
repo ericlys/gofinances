@@ -1,8 +1,7 @@
 import {
   createContext,
   ReactNode,
-  useContext,
-  useState
+  useContext, useEffect, useState
 } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -40,6 +39,9 @@ const AuthContext = createContext({} as IAuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps ){
   const [user, setUser] = useState<User>({} as User);
+  const [userStorageLoading, setUserStorageLoading] = useState(true);
+
+  const userStorageKey = '@gofinances:user';
 
   async function signInWithGoogle(){
     try {
@@ -64,7 +66,7 @@ function AuthProvider({ children }: AuthProviderProps ){
       }
       
       setUser(userLogged)
-      await AsyncStorage.setItem('@gofinances:user', JSON.stringify(userLogged));
+      await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
      }
 
     }catch (error) {
@@ -91,7 +93,7 @@ function AuthProvider({ children }: AuthProviderProps ){
         };
         
         setUser(userLogged);
-        await AsyncStorage.setItem('@gofinances:user', JSON.stringify(userLogged));
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
       }
 
 
@@ -99,6 +101,21 @@ function AuthProvider({ children }: AuthProviderProps ){
       throw new Error();
     }
   }
+
+  useEffect(()=>{
+    async function loadUserStorageDate() {
+      const userStorage = await AsyncStorage.getItem(userStorageKey);
+
+      if(userStorage){
+        const userLogged = JSON.parse(userStorage) as User;
+        setUser(userLogged);
+      }
+      
+      setUserStorageLoading(false);
+    }
+
+    loadUserStorageDate();
+  },[])
 
   return(
   <AuthContext.Provider value={{ 

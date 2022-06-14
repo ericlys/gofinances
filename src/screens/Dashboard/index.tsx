@@ -1,25 +1,14 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useCallback, useState } from "react";
 import { ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HighlightCard } from "../../components/HighlightCard";
 import { TransactionCard, TransactionCardProps } from "../../components/TransactionCard";
-import { 
+import {
   Container,
-  Header,
-  UserWrapper,
-  UserInfo,
-  Photo,
-  User,
-  UserGreeting,
-  UserName,
-  Icon,
-  HighlightCards,
-  Transactions,
-  Title,
-  TransactionList,
-  LogoutButton,
-  LoadContainer
- } from './styles';
+  Header, HighlightCards, Icon, LoadContainer, LogoutButton, Photo, Title,
+  TransactionList, Transactions, User,
+  UserGreeting, UserInfo, UserName, UserWrapper
+} from './styles';
 
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components/native";
@@ -99,11 +88,12 @@ export function Dashboard(){
     const lastTransactionsEntries = getLastTransactionDate(transactions, 'positive');
     const lastTransactionsExpensives = getLastTransactionDate(transactions, 'negative');
 
-    const totalInterval =
+    const totalInterval = transactions[0] ?
     Intl.DateTimeFormat('pt-BR', {
       day: '2-digit',
       month: 'long'
-    }).format(new Date(transactions[0].date));
+    }).format(new Date(transactions[0].date)) :
+    "";
 
     const totalIntervalFormated = `01 a ${totalInterval}`;
 
