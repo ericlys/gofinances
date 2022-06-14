@@ -17,7 +17,7 @@ import theme from './src/global/styles/theme';
 import { Routes } from './src/routes';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { AuthProvider } from './src/hooks/auth';
+import { AuthProvider, useAuth } from './src/hooks/auth';
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -27,7 +27,9 @@ export default function App() {
     Poppins_700Bold
   });
 
-  if(!fontsLoaded) {
+  const { userStorageLoading } = useAuth();
+
+  if(!fontsLoaded || userStorageLoading) {
     return null;
   }
 
