@@ -41,16 +41,21 @@ export function Dashboard(){
     collection: DataListProps[], 
     type: 'positive' | 'negative'
   ){
+    const collectionFilttered = collection
+    .filter(transactions => transactions.type === type);
+
+    if(collectionFilttered.length === 0) 
+    return 0;
+
     const lastTransaction = new Date(
-    Math.max.apply(Math, collection
-     .filter( transactions => transactions.type === type)
+    Math.max.apply(Math, collectionFilttered
      .map( transactions => new Date(transactions.date).getTime())));
 
    return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', {month: 'long'})}`;
   }
 
   async function loadTransactions(){
-    const dataKey = '@gofinances:transactions';
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
 
@@ -97,8 +102,6 @@ export function Dashboard(){
     }).format(new Date(transactions[0].date)) :
     "";
 
-    const totalIntervalFormated = `01 a ${totalInterval}`;
-
     const total = entriesTotal - expensiveTotal;
 
     setHighlightData({
@@ -107,21 +110,30 @@ export function Dashboard(){
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última entrada dia ${lastTransactionsEntries}`,
+        lastTransaction: lastTransactionsEntries === 0 ? 
+          'Não há trnsações' 
+          :
+         `Última entrada dia ${lastTransactionsEntries}`,
       }, 
       expensives:{
         amount: expensiveTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última saída dia ${lastTransactionsExpensives}`,
+        lastTransaction: lastTransactionsExpensives === 0 ?
+        'Não há trnsações' 
+        : 
+        `Última saída dia ${lastTransactionsExpensives}`,
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: totalIntervalFormated
+        lastTransaction: totalInterval === '' ? 
+        'Não há trnsações' 
+        : 
+        `01 a ${totalInterval}`
       }
     })
 

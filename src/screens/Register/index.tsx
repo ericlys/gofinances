@@ -1,33 +1,29 @@
 import React, { useState } from "react";
-import { 
-  Keyboard,
+import {
+  Alert, Keyboard,
   Modal,
-  TouchableWithoutFeedback,
-  Alert
+  TouchableWithoutFeedback
 } from "react-native";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from 'react-native-uuid';
+import * as Yup from "yup";
 
-import { useForm } from 'react-hook-form';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
 
+import { Button } from "../../components/Form/Button";
 import { InputForm } from "../../components/Form/InputForm";
 import { TransactionTypeButton } from "../../components/Form/TransactionTypeButton";
-import { Button } from "../../components/Form/Button";
 
-import { CategorySelect } from "../CategorySelect";
 import { CategorySelectButton } from "../../components/Form/CategorySelectButton";
+import { CategorySelect } from "../CategorySelect";
 
-import { 
-  Container,
-  Header,
-  Title,
-  Form,
-  Filds,
-  TransactionTypes
+import { useAuth } from "../../hooks/auth";
+import {
+  Container, Filds, Form, Header,
+  Title, TransactionTypes
 } from "./styles";
 
 interface FormData {
@@ -49,6 +45,8 @@ export function Register(){
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const { navigate }: NavigationProp<ParamListBase> = useNavigation();
+
+  const { user } = useAuth();
   
   const [category, setCategory] = useState({
     key: 'category',
@@ -95,7 +93,7 @@ export function Register(){
     }
 
     try{
-      const dataKey = '@gofinances:transactions';
+      const dataKey = `@gofinances:transactions_user:${user.id}`;
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
