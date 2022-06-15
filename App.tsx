@@ -1,6 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen';
-import React from 'react';
-import { StatusBar } from 'react-native';
+import { LogBox, StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 
 import 'intl';
@@ -13,6 +12,8 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import theme from './src/global/styles/theme';
+
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 import { Routes } from './src/routes';
 

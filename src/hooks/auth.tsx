@@ -54,7 +54,7 @@ function AuthProvider({ children }: AuthProviderProps ){
       const authUrl = `${GOOGLE_AUTH_END_POINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 
       const {type, params} = await AuthSession
-      .startAsync({ authUrl }) as AuthorizationResponse ;
+      .startAsync({ authUrl, showInRecents: false }) as AuthorizationResponse ;
 
      if(type === 'success'){
       const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`)
