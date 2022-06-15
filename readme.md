@@ -11,6 +11,7 @@ Gofinances is a mobile application developed to help you with financial manageme
 - [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org)
 - [Expo](https://expo.io/)
+- [Styled Components](https://styled-components.com/)
 
 ## Installation
 
